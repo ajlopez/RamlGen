@@ -35,8 +35,13 @@ function getSetName(name) {
     return name;
 }
 
+function capitalize(name) {
+    return name[0].toUpperCase() + name.substring(1);
+}
+
 module.exports = {
     getName: getName,
-    getSetName: getSetName
+    getSetName: getSetName,
+    capitalize: capitalize
 }
 

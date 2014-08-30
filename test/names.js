@@ -16,3 +16,9 @@ exports['get set name'] = function (test) {
     test.equal(names.getSetName('/songs'), 'songs');
     test.equal(names.getSetName('/city'), 'cities');
 }
+
+exports['capitalize'] = function (test) {
+    test.equal(names.capitalize('song'), 'Song');
+    test.equal(names.capitalize('SONG'), 'SONG');
+    test.equal(names.capitalize('Song'), 'Song');
+}
