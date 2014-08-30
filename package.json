@@ -20,8 +20,12 @@
   "scripts": {
     "test": "simpleunit ./test"
   },
+  "bin": {
+    "ramlgen": "./bin/ramlgen"
+  },
   "dependencies": {
-    "ajgenesis": "0.0.11"
+    "ajgenesis": "0.0.11",
+    "raml-parser": "0.8.7"
   },
   "devDependencies": {
     "simpleunit": "0.0.4"

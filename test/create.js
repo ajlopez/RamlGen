@@ -1,5 +1,5 @@
 
-var createtask = require('../create'),
+var createtask = require('../ramlgen/tasks/create'),
     path = require('path'),
     fs = require('fs'),
     ajgenesis = require('ajgenesis');
