@@ -1,8 +1,34 @@
 
-var generatetask = require('../source/ramlgen/tasks/generate'),
-    path = require('path'),
-    fs = require('fs'),
-    ajgenesis = require('ajgenesis');
+var generatetask = require('../source/ramlgen/tasks/generate');
+var createtask = require('../ramlgen/tasks/create'); 
+var path = require('path');
+var fs = require('fs');
+var ajgenesis = require('ajgenesis');
+
+exports['create application'] = function (test) {
+    test.async();
+    
+    var cwd = process.cwd();
+    process.chdir('test');
+    
+    var dirname = 'build';
+    
+    createtask(null, [dirname], ajgenesis, function (err, result) {
+        test.equal(err, null);
+        
+        test.ok(fs.existsSync(dirname));
+        test.ok(fs.existsSync(path.join(dirname, 'ramlgen')));
+        test.ok(fs.existsSync(path.join(dirname, 'ramlgen', 'templates')));
+        test.ok(fs.existsSync(path.join(dirname, 'ramlgen', 'tasks')));
+        test.ok(fs.existsSync(path.join(dirname, 'ramlgen', 'libs')));        
+        test.ok(fs.existsSync(path.join(dirname, 'ramlgen', 'models')));
+        test.ok(fs.existsSync(path.join(dirname, 'ramlgen', 'models', 'project.json')));
+        
+        process.chdir(cwd);
+        
+        test.done();
+    });
+};
 
 exports['generate'] = function (test) {
     test.async();
@@ -13,8 +39,8 @@ exports['generate'] = function (test) {
     
     var model = { };
         
-    if (fs.existsSync('build') && !fs.existsSync(path.join('build', 'node_modules')))
-        removeDirSync('build');
+    //if (fs.existsSync('build') && !fs.existsSync(path.join('build', 'node_modules')))
+    //    removeDirSync('build');
         
     ajgenesis.createDirectory('build');
     process.chdir('build');
@@ -29,6 +55,10 @@ exports['generate'] = function (test) {
         test.equal(err, null);
         test.equal(result, null);
     
+        test.ok(fs.existsSync('app.js'));
+        test.ok(fs.existsSync('package.json'));
+        test.ok(fs.existsSync(path.join('bin', 'www')));
+        
         test.ok(fs.existsSync(path.join('routes')));
         test.ok(fs.existsSync(path.join('routes', 'songs.js')));
         test.ok(fs.existsSync(path.join('routes', 'artists.js')));

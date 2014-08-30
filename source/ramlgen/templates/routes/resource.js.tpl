@@ -29,3 +29,6 @@ router.${method.method}(${url}, function (req, res) { res.end() });
         });
 }
 #>
+
+module.exports = router;
+

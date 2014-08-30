@@ -9,6 +9,11 @@ function generate(model, args, ajgenesis, cb) {
         model.builddir = '.';
         
     model.names = names;
+    
+    if (!model.project) {
+        var prjname = path.resolve(path.join(model.builddir, 'ramlgen', 'models', 'project.json'));
+        model.project = require(prjname).project;
+    }
 
     var filename = args[0];
     var pos = filename.indexOf(':');
@@ -24,10 +29,16 @@ function generate(model, args, ajgenesis, cb) {
                 var builddir = model.builddir;
                 var controllersdir = path.join(builddir, 'controllers');
                 var routesdir = path.join(builddir, 'routes');
+                var bindir = path.join(builddir, 'bin');
 
                 ajgenesis.createDirectory(controllersdir);
                 ajgenesis.createDirectory(routesdir);
-
+                ajgenesis.createDirectory(bindir);
+                
+                ajgenesis.fileTransform(path.join(__dirname, '..', 'templates', 'app.js.tpl'), path.join(builddir, 'app.js'), model);
+                ajgenesis.fileTransform(path.join(__dirname, '..', 'templates', 'package.json.tpl'), path.join(builddir, 'package.json'), model);
+                ajgenesis.fileTransform(path.join(__dirname, '..', 'templates', 'bin', 'www.tpl'), path.join(bindir, 'www'), model);
+                
                 raml.resources.forEach(function (resource) {
                     model.resource = resource;
                     ajgenesis.fileTransform(path.join(__dirname, '..', 'templates', 'controllers', 'resource.js.tpl'), path.join(controllersdir, resource.relativeUri.substring(1) + '.js'), model);
