@@ -9,20 +9,24 @@ function actions(prefix, resource) {
     }
         
     resource.methods.forEach(function (method) {
+        if (!method.fn)
+            return;
+    
         if (method.description) { #>
 // ${method.description}
 <#        
         }
         
         var name = model.names.capitalize(model.names.getName(resource.relativeUri)); #>
-function ${method.method}${prefix}${name}(req, res) {
+function ${method.fn.name}(req, res) {
     res.end();
 }
 <#
-        if (resource.resources)
-            resource.resources.forEach(function (subresource) {
-                actions(prefix + name, subresource);
-            });
     });
+    
+    if (resource.resources && resource.entity && resource.entity.title)
+        resource.resources.forEach(function (subresource) {
+            actions(prefix + resource.entity.title, subresource);
+        });
 }
 #>

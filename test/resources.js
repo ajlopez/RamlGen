@@ -18,6 +18,7 @@ exports['load simple model from file'] = function (test) {
             
             test.ok(raml.resources);
             test.ok(raml.resources.length);
+            test.equal(raml.resources.length, 2);
             
             var resource = raml.resources[0];
             
@@ -29,11 +30,29 @@ exports['load simple model from file'] = function (test) {
             
             test.ok(resource.methods);
             test.ok(resource.methods.length);
+            test.equal(resource.methods.length, 2);
+            
+            var method = resource.methods[0];
+            
+            test.ok(method.fn);
+            test.ok(method.fn.name, 'getSongs');
+            
+            var method = resource.methods[1];
+            
+            test.ok(method.fn);
+            test.ok(method.fn.name, 'postSong');
+            
+            test.ok(resource.resources);
+            test.ok(resource.resources.length);
+            test.ok(resource.resources[0].entity);
             
             test.done();
         }
         catch (err) {
-            console.log(err);
+            if (err.stack)
+                console.log(err.stack);
+            else
+                console.log(err);
             throw err;
         }
     });
