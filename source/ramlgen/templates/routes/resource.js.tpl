@@ -4,6 +4,7 @@ var router = express.Router();
 var controller = require('../controllers/${resource.entity.setname}');
 
 <#
+
 route('', resource);
 
 function route(prefix, resource) {
@@ -11,21 +12,25 @@ function route(prefix, resource) {
 // ${resource.description}
 <#        
     }
+
+    var uri = resource.relativeUri;        
+    if (uri[0] == '/' && uri[1] == '{')
+        uri = '/:' + uri.substring(2, uri.length -1);
         
     resource.methods.forEach(function (method) {
         if (method.description) { #>
 // ${method.description}
 <#        
         }
-        
-        var url = "'" + prefix + resource.relativeUri + "'"; #>
-router.${method.method}(${url}, function (req, res) { res.end() });        
+                
+        var url = "'" + prefix + uri + "'"; #>
+router.${method.method}(${url}, controller.${method.fn.name});        
 <#
     });
     
     if (resource.resources)
         resource.resources.forEach(function (subresource) {
-            route(prefix + resource.relativeUri, subresource);
+            route(prefix + uri, subresource);
         });
 }
 #>

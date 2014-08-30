@@ -32,7 +32,17 @@ function actions(prefix, resource) {
         
         var name = model.names.capitalize(model.names.getName(resource.relativeUri)); #>
 function ${method.fn.name}(req, res) {
+<#
+    if (method.fn.example) { #>
+    res.json(${method.fn.example});
+<#
+    }
+    else {
+#>
     res.end();
+<#
+    }
+#>
 }
 <#
         fns.push(method.fn.name);
