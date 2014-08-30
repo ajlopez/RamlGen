@@ -20,12 +20,19 @@ exports['generate'] = function (test) {
     process.chdir('build');
     
     generatetask(model, [path.join(__dirname, 'simple.raml')], ajgenesis, function (err, result) {
+        if (err)
+            console.log(err);
+            
         test.equal(err, null);
         test.equal(result, null);
     
         test.ok(fs.existsSync(path.join('routes')));
         test.ok(fs.existsSync(path.join('routes', 'songs.js')));
         test.ok(fs.existsSync(path.join('routes', 'artists.js')));
+    
+        test.ok(fs.existsSync(path.join('controllers')));
+        test.ok(fs.existsSync(path.join('controllers', 'songs.js')));
+        test.ok(fs.existsSync(path.join('controllers', 'artists.js')));
         
         process.chdir(cwd);
         

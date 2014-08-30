@@ -1,6 +1,5 @@
 
 <#
-
 actions('', resource);
 
 function actions(prefix, resource) {
@@ -15,12 +14,14 @@ function actions(prefix, resource) {
 <#        
         }
         
-        var url = "'" + prefix + resource.relativeUri + "'"; #>
-router.${method.method}(${url}, function (req, res) { res.end() });        
+        var name = model.names.capitalize(model.names.getName(resource.relativeUri)); #>
+function ${method.method}${prefix}${name}(req, res) {
+    res.end();
+}
 <#
         if (resource.resources)
             resource.resources.forEach(function (subresource) {
-                route(prefix + resource.relativeUri, subresource);
+                actions(prefix + name, subresource);
             });
     });
 }

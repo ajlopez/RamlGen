@@ -1,10 +1,13 @@
 
 var path = require('path');
 var parser = require('raml-parser');
+var names = require('../libs/names');
 
 function generate(model, args, ajgenesis, cb) {
     if (!model.builddir)
         model.builddir = '.';
+        
+    model.names = names;
 
     var filename = args[0];
     var pos = filename.indexOf(':');
@@ -15,19 +18,25 @@ function generate(model, args, ajgenesis, cb) {
         .then(function (raml) {
             model.raml = raml;
             
-            var builddir = model.builddir;
-            var controllersdir = path.join(builddir, 'controllers');
-            var routesdir = path.join(builddir, 'routes');
+            try {
+                var builddir = model.builddir;
+                var controllersdir = path.join(builddir, 'controllers');
+                var routesdir = path.join(builddir, 'routes');
 
-            ajgenesis.createDirectory(controllersdir);
-            ajgenesis.createDirectory(routesdir);
+                ajgenesis.createDirectory(controllersdir);
+                ajgenesis.createDirectory(routesdir);
 
-            raml.resources.forEach(function (resource) {
-                model.resource = resource;
-                ajgenesis.fileTransform(path.join(__dirname, '..', 'templates', 'controllers', 'resource.js.tpl'), path.join(controllersdir, resource.relativeUri.substring(1) + '.js'), model);
-                ajgenesis.fileTransform(path.join(__dirname, '..', 'templates', 'routes', 'resource.js.tpl'), path.join(routesdir, resource.relativeUri.substring(1) + '.js'), model);
-                delete model.resource;
-            });
+                raml.resources.forEach(function (resource) {
+                    model.resource = resource;
+                    ajgenesis.fileTransform(path.join(__dirname, '..', 'templates', 'controllers', 'resource.js.tpl'), path.join(controllersdir, resource.relativeUri.substring(1) + '.js'), model);
+                    ajgenesis.fileTransform(path.join(__dirname, '..', 'templates', 'routes', 'resource.js.tpl'), path.join(routesdir, resource.relativeUri.substring(1) + '.js'), model);
+                    delete model.resource;
+                });            
+            }
+            catch (err) {
+                cb(err, null);
+                return;
+            }
              
             cb(null, null);
         }, function (err) {
