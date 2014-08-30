@@ -28,7 +28,7 @@ function completeResource(resource, prefix) {
         resource.entity.name = names.getName(name);
         resource.entity.setname = names.getSetName(name);
         resource.entity.title = names.capitalize(name);
-        resource.entity.settitle = names.capitalize(name);
+        resource.entity.settitle = names.capitalize(names.getSetName(name));
     }    
     
     if (resource.methods)

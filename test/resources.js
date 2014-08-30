@@ -18,7 +18,7 @@ exports['load simple model from file'] = function (test) {
             
             test.ok(raml.resources);
             test.ok(raml.resources.length);
-            test.equal(raml.resources.length, 2);
+            test.equal(raml.resources.length, 3);
             
             var resource = raml.resources[0];
             
