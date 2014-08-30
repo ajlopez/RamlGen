@@ -1,0 +1,21 @@
+#%RAML 0.8
+---
+title: Simple API
+version: v1
+
+/songs:
+  description: Collection of available songs
+  get:
+    description: Get a list of songs
+  /{songId}:
+    description: Song entity
+    get:
+  post:
+/artists:
+  description: Collection of artists
+  get:
+    description: Get the artists list
+  /{artistId}:
+    get:
+    /albums:
+      get:
