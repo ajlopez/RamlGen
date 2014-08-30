@@ -13,6 +13,15 @@ module.exports = function (model, args, ajgenesis, cb) {
             cb(err, null);
             return;
         }
+
+        var projmodel;
+
+        if (model.project)
+            projmodel = model.project;
+        else
+            model.project = projmodel = { project: { name: dirname, version: '0.0.1'} };
+        
+        ajgenesis.saveModel(path.join(dirname, 'ramlgen', 'models', 'project.json'), projmodel);
         
         cb(null, null);
     });

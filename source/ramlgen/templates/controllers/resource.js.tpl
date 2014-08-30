@@ -1,6 +1,19 @@
 
 <#
+var fns = [];
+
 actions('', resource);
+
+#>
+module.exports = {
+<#
+    fns.forEach(function (fn) { #>
+    ${fn}: ${fn},
+<#
+    });
+#>
+}
+<#
 
 function actions(prefix, resource) {
     if (resource.description) { #>
@@ -22,6 +35,7 @@ function ${method.fn.name}(req, res) {
     res.end();
 }
 <#
+        fns.push(method.fn.name);
     });
     
     if (resource.resources && resource.entity && resource.entity.title)

@@ -15,10 +15,21 @@ function complete(obj, prefix) {
 function completeResource(resource, prefix) {
     resource.entity = { };
     
-    resource.entity.name = names.getName(resource.relativeUri);
-    resource.entity.setname = names.getSetName(resource.relativeUri);
-    resource.entity.title = names.capitalize(resource.entity.name);
-    resource.entity.settitle = names.capitalize(resource.entity.setname);
+    var name = names.getName(resource.relativeUri);
+    
+    if (name[0] == '{') {
+        name = name.substring(1, name.length - 1);
+        resource.entity.name = names.getName(name);
+        resource.entity.setname = names.getSetName(name);
+        resource.entity.title = 'With' + names.capitalize(name);
+        resource.entity.settitle = 'With' + names.capitalize(name);
+    }
+    else {
+        resource.entity.name = names.getName(name);
+        resource.entity.setname = names.getSetName(name);
+        resource.entity.title = names.capitalize(name);
+        resource.entity.settitle = names.capitalize(name);
+    }    
     
     if (resource.methods)
         resource.methods.forEach(function (method) {

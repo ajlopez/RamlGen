@@ -21,7 +21,10 @@ exports['generate'] = function (test) {
     
     generatetask(model, [path.join(__dirname, 'simple.raml')], ajgenesis, function (err, result) {
         if (err)
-            console.log(err);
+            if (err.stack)
+                console.log(err.stack);
+            else
+                console.log(err);
             
         test.equal(err, null);
         test.equal(result, null);

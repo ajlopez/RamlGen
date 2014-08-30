@@ -37,6 +37,7 @@ exports['create application'] = function (test) {
         test.ok(fs.existsSync(path.join(dirname, 'ramlgen', 'tasks')));
         test.ok(fs.existsSync(path.join(dirname, 'ramlgen', 'libs')));        
         test.ok(fs.existsSync(path.join(dirname, 'ramlgen', 'models')));
+        test.ok(fs.existsSync(path.join(dirname, 'ramlgen', 'models', 'project.json')));
         
         test.done();
     });
