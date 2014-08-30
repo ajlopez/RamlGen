@@ -35,18 +35,14 @@ function completeResource(resource, prefix) {
         resource.methods.forEach(function (method) {
             method.fn = { };
             
-            console.dir(method);
-            
             if (method.method == 'get' && prefix == '')                
                 method.fn.name = method.method + prefix + resource.entity.settitle;
             else
                 method.fn.name = method.method + prefix + resource.entity.title;
                 
             if (method.responses) {
-                console.dir(method.responses);
                 if (method.responses['200'] && method.responses['200'].body) {
                     var body = method.responses['200'].body;
-                    console.dir(body);
                     
                     if (body['application/json'] && body['application/json'].example)
                         method.fn.example = body['application/json'].example;
