@@ -1,6 +1,5 @@
 
 var path = require('path');
-var parser = require('raml-parser');
 var names = require('../libs/names');
 var resources = require('../libs/resources');
 
@@ -20,7 +19,7 @@ function generate(model, args, ajgenesis, cb) {
     if (pos > 0)
         filename = filename.substring(pos + 1);
     
-    parser.loadFile(filename)
+    ajgenesis.loadRamlFile(filename)
         .then(function (raml) {
             resources.complete(raml);
             model.raml = raml;

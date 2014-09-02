@@ -12,7 +12,25 @@ npm install ramlgen
 
 ## Usage
 
-Reference in your program:
+Global install
+```
+npm install ramlgen -g
+```
+
+Create and generate a project
+```
+ramlgen create myproj
+cd myproj
+ramlgen generate <ramlfilepaht>
+npm install
+npm start
+```
+
+A web server is created, using Express. Browse to `http://localhost:3000`. ie:
+
+```
+http://localhost:3000/songs
+```
 
 TBD
 
@@ -32,6 +50,7 @@ TBD
 ## Versions
 
 - 0.0.1 Published
+- 0.0.2 Published, loadRamlFile in main project and enriched ajgenesis
 
 ## Contribution
 

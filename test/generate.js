@@ -1,9 +1,10 @@
 
 var generatetask = require('../source/ramlgen/tasks/generate');
 var createtask = require('../ramlgen/tasks/create'); 
+var ramlgen = require('..');
 var path = require('path');
 var fs = require('fs');
-var ajgenesis = require('ajgenesis');
+var ajgenesis = ramlgen.ajgenesis;
 
 exports['create application'] = function (test) {
     test.async();
